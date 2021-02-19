@@ -1,0 +1,23 @@
+.search-bar-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  /* padding: 4px; */
+  border: 1px solid black;
+  background-color: orangered;
+}
+
+.logo {
+  color: #ffffff;
+}
+
+.search-bar-btn {
+  margin: 8px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.vl {
+  border-left: 1px solid black;
+  height: 12px;
+}
