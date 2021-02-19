@@ -1,4 +1,10 @@
 import axios from 'axios';
+import BottleNeck from 'bottleneck'
+
+const limiter = new BottleNeck({
+  maxConcurrent: 1, 
+  minTime: 333
+})
 
 // news, past, comments, ask, show, jobs 
 
@@ -25,7 +31,7 @@ export const Request = () => {
 
     Promise.all(
       data.map(async (d) => {
-        const dataId = await getIdFromData(d)
+        const dataId = await limiter.schedule(() => getIdFromData(d))
         console.log(dataId)
       })
     )
