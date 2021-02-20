@@ -33,6 +33,10 @@ export const Results = ({results}) => {
   return (
     <div className="results-wrapper">
       {result}
+      <div 
+        className="more-btn"
+        // onClick={() => handleClick()}
+        >More</div>
     </div>
   )
 }

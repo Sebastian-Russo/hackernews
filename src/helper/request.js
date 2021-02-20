@@ -24,9 +24,8 @@ export const Request = (items, setItems, searchBarItems) => {
   
     return obj[type] ? obj[type] : obj['new'];
   }
-  console.log(searchBarItems)
+
   let type = searchBar(searchBarItems)
-  console.log(type)
 
   const getData = () => {
     const options = type
@@ -56,6 +55,8 @@ export const Request = (items, setItems, searchBarItems) => {
       })
     )
     .then((newItems) => setItems((items) => [...items, ...newItems]));
+    // make conditional: check if searchBar type has changed, then clear array of items first
+    
   }  
 
   runAsyncFunctions()
