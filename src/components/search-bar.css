@@ -2,19 +2,27 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  /* padding: 4px; */
-  border: 1px solid black;
   background-color: orangered;
 }
-
 .logo {
   color: #ffffff;
+  border: 1px solid white;
+  padding-left: 4px;
+  padding-right: 4px;
+  margin: 2px;
+}
+.logo-name {
+  font-weight: bold;
+  margin-left: 5px;
 }
 
 .search-bar-btn {
-  margin: 8px;
-  text-decoration: none;
-  color: inherit;
+  margin: 4px;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+.search-bar-btn:hover {
+  cursor: pointer;
 }
 
 .vl {

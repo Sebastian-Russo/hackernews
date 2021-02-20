@@ -1,26 +1,24 @@
 import React, { useState } from 'react';
 import './search-bar.css';
 
-export const SearchBar = () => {
+export const SearchBar = ({handleClick}) => {
 
 
   return (
     <div className="search-bar-wrapper">
-      <div className="logo">Y</div>
-      <div>Hacker News</div>
-      <div><a href="" className="search-bar-btn">new</a></div>
+      <div id="news" onClick={(e) => handleClick(e)} className="logo">Y</div>
+      <div id="news" onClick={(e) => handleClick(e)} className="logo-name">Hacker News</div>
+      <div id="news" onClick={(e) => handleClick(e)} className="search-bar-btn">new</div>
       <div className="vl"></div>
-      <div><a href="" className="search-bar-btn">post</a></div>
+      <div id="past" onClick={(e) => handleClick(e)} className="search-bar-btn">past</div>
       <div className="vl"></div>
-      <div><a href="" className="search-bar-btn">comments</a></div>
+      <div id="comments" onClick={(e) => handleClick(e)} className="search-bar-btn">comments</div>
       <div className="vl"></div>
-      <div><a href="" className="search-bar-btn">ask</a></div>
+      <div id="ask" onClick={(e) => handleClick(e)} className="search-bar-btn">ask</div>
       <div className="vl"></div>
-      <div><a href="" className="search-bar-btn">show</a></div>  
+      <div id="show" onClick={(e) => handleClick(e)} className="search-bar-btn">show</div>  
       <div className="vl"></div>
-      <div><a href="" className="search-bar-btn">jobs</a></div>  
-      <div className="vl"></div>
-      <div><a href="" className="search-bar-btn">submit</a></div>    
+      <div id="jobs" onClick={(e) => handleClick(e)} className="search-bar-btn">jobs</div>  
     </div>
   )
 }

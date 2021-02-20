@@ -6,15 +6,22 @@ import { Request } from '../helper/request'
 
 function App() {
   const [items, setItems] = useState([]);
+  const [searchBarItems, setSearchBarItems] = useState('news');
 
   // API calls
   useEffect(() => {
-    Request(items, setItems)
-  }, [])
+    Request(items, setItems, searchBarItems)
+  }, [searchBarItems])
+
+  const handleClick = (e) => {
+    const serachBarButtonId = e.target.id;
+    console.log(serachBarButtonId)
+    setSearchBarItems(serachBarButtonId)
+  }
 
   return (
     <div className="App">
-      <SearchBar />
+      <SearchBar handleClick={handleClick} />
       <Results results={items} />
     </div>
   );

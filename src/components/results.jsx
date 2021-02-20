@@ -7,11 +7,15 @@ export const Results = ({results}) => {
 
   console.log(results)
 
-  const result = results.map((result,i) => {
+  // api came back with a null value in array randomly
+  const filteredResults = results.filter((result,i) => result != null || undefined);
+
+  const result = filteredResults.map((result,i) => {
+    
     let date = new Date(result.time * 1000)
     let time = timeConversion(date)
     return (
-      <div key={result.id} className="result-wrapper">
+      <div key={i} className="result-wrapper">
         <div className="box-1">
             <div>{i+1}.</div>
             <div><a href={result.url}>{result.title}</a></div>

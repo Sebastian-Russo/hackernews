@@ -6,12 +6,30 @@ const limiter = new BottleNeck({
   minTime: 333
 })
 
-// news, past, comments, ask, show, jobs 
 
-export const Request = (items, setItems) => {
+export const Request = (items, setItems, searchBarItems) => {
+  
+  const searchBar = type => {
+    const obj = {
+      'new': 'newstories',
+      'past': '',
+      'comments': '',
+      'ask': 'askstories',
+      'show': 'showstories',
+      'jobs': 'jobstories',
+      'top': 'topstories',
+      'best': 'beststories',
+      'user': 'user'
+    }
+  
+    return obj[type] ? obj[type] : obj['new'];
+  }
+  console.log(searchBarItems)
+  let type = searchBar(searchBarItems)
+  console.log(type)
 
   const getData = () => {
-    const options = 'newstories' 
+    const options = type
     const API_URL = `https://hacker-news.firebaseio.com/v0/${options}.json?print=pretty`;
 
     return new Promise((resolve, reject) => {
@@ -28,9 +46,10 @@ export const Request = (items, setItems) => {
 
   const runAsyncFunctions = async () => {
     const {data} = await getData()
+    let firstTen = data.filter((d,i) => i < 10);
 
     Promise.all(
-      data.map(async (d) => {
+      firstTen.map(async (d) => {
         const {data} = await limiter.schedule(() => getIdFromData(d))
         console.log(data)
         return data;
@@ -38,7 +57,6 @@ export const Request = (items, setItems) => {
     )
     .then((newItems) => setItems((items) => [...items, ...newItems]));
   }  
-
 
   runAsyncFunctions()
 }
