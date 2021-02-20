@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './search-bar.css';
 
-export const SearchBar = ({handleChange}) => {
+export const SearchBar = () => {
 
 
   return (

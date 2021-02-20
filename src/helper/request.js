@@ -8,7 +8,7 @@ const limiter = new BottleNeck({
 
 // news, past, comments, ask, show, jobs 
 
-export const Request = () => {
+export const Request = (items, setItems) => {
 
   const getData = () => {
     const options = 'newstories' 
@@ -31,19 +31,21 @@ export const Request = () => {
 
     Promise.all(
       data.map(async (d) => {
-        const dataId = await limiter.schedule(() => getIdFromData(d))
-        console.log(dataId)
+        const {data} = await limiter.schedule(() => getIdFromData(d))
+        console.log(data)
+        return data;
       })
     )
-  }
+    .then((newItems) => setItems((items) => [...items, ...newItems]));
+  }  
 
-  // runAsyncFunctions()
 
+  runAsyncFunctions()
+}
   
   // make first call, go through array, for each id, call for info, then return that/ save in new array and render it or paginate it
   // Promise.all on the array (response of new storeis, certain block like ten per page), call other url within in to get data on those ten items
-  // when styling, copy paste data into random file so you don't have to keep calling endpoint
+  // Promise.all return each data, after you can chain with then that passes an array with all resolved data. This way you only need to call it once setItems:
   // maybe cache data
 
 
-}

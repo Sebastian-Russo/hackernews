@@ -1,4 +1,5 @@
 import './results.css';
+import { timeConversion } from '../helper/time';
 
 export const Results = ({results}) => {
   
@@ -6,15 +7,28 @@ export const Results = ({results}) => {
 
   console.log(results)
 
+  const result = results.map((result,i) => {
+    let date = new Date(result.time * 1000)
+    let time = timeConversion(date)
+    return (
+      <div key={result.id} className="result-wrapper">
+        <div className="box-1">
+            <div>{i+1}.</div>
+            <div><a href={result.url}>{result.title}</a></div>
+        </div>
+        <div className="box-2">
+            <div>{result.score} points</div>
+            <div>by {result.by}</div>
+            <div>{time} ago</div>
+        </div>
+      </div>
+    )
+  })
   
-
-  // const render = results.data[0]
-
-  // console.log(render)
   
   return (
     <div className="results-wrapper">
-      Results
+      {result}
     </div>
   )
 }
