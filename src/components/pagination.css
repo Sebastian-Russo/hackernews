@@ -1,0 +1,18 @@
+.pagination {
+  display: flex;
+  margin: 2px;
+}
+
+.page-item {
+  padding: 2px;
+  padding-left: 4px;
+  padding-right: 4px;
+  margin: 4px;
+  outline: 1px solid black;
+  cursor: pointer;
+}
+
+.page-item:hover {
+  background-color: orangered;
+  color: white;
+}

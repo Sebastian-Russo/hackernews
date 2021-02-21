@@ -7,13 +7,13 @@ const limiter = new BottleNeck({
 })
 
 
-export const Request = (items, setItems, searchBarItems) => {
+export const Request = (results, setResults, searchBarType, setLoading) => {
   
   const searchBar = type => {
     const obj = {
       'new': 'newstories',
       'past': '',
-      'comments': '',
+      'comments': 'user',
       'ask': 'askstories',
       'show': 'showstories',
       'jobs': 'jobstories',
@@ -25,7 +25,7 @@ export const Request = (items, setItems, searchBarItems) => {
     return obj[type] ? obj[type] : obj['new'];
   }
 
-  let type = searchBar(searchBarItems)
+  let type = searchBar(searchBarType)
 
   const getData = () => {
     const options = type
@@ -36,6 +36,25 @@ export const Request = (items, setItems, searchBarItems) => {
     })
   }
 
+////////////////////////////////////////////////////
+
+
+const fetchData = async () => {
+  let currentPage = 1
+  setLoading(true)
+  const options = type
+  const API_URL = `https://hacker-news.firebaseio.com/v0/${options}&page=${currentPage}.json?print=pretty`;
+  const {data} = await axios.get(API_URL)
+  setResults(data)
+  setLoading(false)
+}
+
+// fetchData()
+
+
+
+//////////////////////////////////////////////////
+
   const getIdFromData = (dataId) => {
     const API_URL = `https://hacker-news.firebaseio.com/v0/item/${dataId}.json?print=pretty`;
     return new Promise((resolve, reject) => {
@@ -43,7 +62,9 @@ export const Request = (items, setItems, searchBarItems) => {
     })
   }
 
+
   const runAsyncFunctions = async () => {
+    setLoading(true)
     const {data} = await getData()
     let firstTen = data.filter((d,i) => i < 10);
 
@@ -53,18 +74,19 @@ export const Request = (items, setItems, searchBarItems) => {
         console.log(data)
         return data;
       })
-    )
-    .then((newItems) => setItems((items) => [...items, ...newItems]));
-    // make conditional: check if searchBar type has changed, then clear array of items first
-    
+      )
+      .then((newresults) => setResults((results) => [...results, ...newresults]))
+      setLoading(false)
+    // make conditional: check if searchBar type has changed, then clear array of results first
   }  
+  
 
   runAsyncFunctions()
 }
   
   // make first call, go through array, for each id, call for info, then return that/ save in new array and render it or paginate it
-  // Promise.all on the array (response of new storeis, certain block like ten per page), call other url within in to get data on those ten items
-  // Promise.all return each data, after you can chain with then that passes an array with all resolved data. This way you only need to call it once setItems:
+  // Promise.all on the array (response of new storeis, certain block like ten per page), call other url within in to get data on those ten results
+  // Promise.all return each data, after you can chain with then that passes an array with all resolved data. This way you only need to call it once setResults:
   // maybe cache data
 
 
