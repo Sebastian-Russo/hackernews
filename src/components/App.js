@@ -40,7 +40,7 @@ function App() {
     <div className="App">
       <SearchBar handleClick={handleClick} />
       <Results results={currentResults} loading={loading} />
-      <Pagination resultsPerPage={resultsPerPage} totalResults={500} paginate={paginate} />
+      <Pagination resultsPerPage={resultsPerPage} totalResults={results.length} paginate={paginate} />
     </div>
   );
 }
