@@ -10,7 +10,7 @@ function App() {
   const [searchBarType, setsearchBarType] = useState('news');
   const [loading, setLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [resultsPerPage, setPostsPerPage] = useState(3);
+  const [resultsPerPage] = useState(10);
   
 
   // Select search bar button type 
@@ -22,13 +22,15 @@ function App() {
   
   // API calls
   useEffect(() => {
-    Request(results, setResults, searchBarType, setLoading)
-  }, [searchBarType])
+    Request(setResults, searchBarType, setLoading, indexOfFirstResult, indexOfLastResult)
+  }, [searchBarType, currentPage])
 
   // Get current results 
   const indexOfLastResult = currentPage * resultsPerPage;
-  const indexOfFirstPost = indexOfLastResult - resultsPerPage;
-  const currentResults = results.slice(indexOfFirstPost, indexOfLastResult);
+  const indexOfFirstResult = indexOfLastResult - resultsPerPage;
+  const currentResults = results.slice(indexOfFirstResult, indexOfLastResult);
+
+  console.log(indexOfFirstResult, indexOfLastResult)
 
   // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber); 
@@ -38,7 +40,7 @@ function App() {
     <div className="App">
       <SearchBar handleClick={handleClick} />
       <Results results={currentResults} loading={loading} />
-      <Pagination resultsPerPage={resultsPerPage} totalResults={results.length} paginate={paginate} />
+      <Pagination resultsPerPage={resultsPerPage} totalResults={500} paginate={paginate} />
     </div>
   );
 }

@@ -7,7 +7,7 @@ const limiter = new BottleNeck({
 })
 
 
-export const Request = (results, setResults, searchBarType, setLoading) => {
+export const Request = (setResults, searchBarType, setLoading, indexOfFirstResult, indexOfLastResult) => {
   
   const searchBar = type => {
     const obj = {
@@ -36,25 +36,6 @@ export const Request = (results, setResults, searchBarType, setLoading) => {
     })
   }
 
-////////////////////////////////////////////////////
-
-
-const fetchData = async () => {
-  let currentPage = 1
-  setLoading(true)
-  const options = type
-  const API_URL = `https://hacker-news.firebaseio.com/v0/${options}&page=${currentPage}.json?print=pretty`;
-  const {data} = await axios.get(API_URL)
-  setResults(data)
-  setLoading(false)
-}
-
-// fetchData()
-
-
-
-//////////////////////////////////////////////////
-
   const getIdFromData = (dataId) => {
     const API_URL = `https://hacker-news.firebaseio.com/v0/item/${dataId}.json?print=pretty`;
     return new Promise((resolve, reject) => {
@@ -66,16 +47,16 @@ const fetchData = async () => {
   const runAsyncFunctions = async () => {
     setLoading(true)
     const {data} = await getData()
-    let firstTen = data.filter((d,i) => i < 10);
+    let ids = data.slice(indexOfFirstResult, indexOfLastResult + 1)
 
     Promise.all(
-      firstTen.map(async (d) => {
+      ids.map(async (d) => {
         const {data} = await limiter.schedule(() => getIdFromData(d))
         console.log(data)
         return data;
       })
-      )
-      .then((newresults) => setResults((results) => [...results, ...newresults]))
+    )
+    .then((newresults) => setResults((results) => [...results, ...newresults]))
       setLoading(false)
     // make conditional: check if searchBar type has changed, then clear array of results first
   }  
