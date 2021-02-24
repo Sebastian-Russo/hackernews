@@ -7,7 +7,7 @@ const limiter = new BottleNeck({
 })
 
 
-export const Request = (setResults, searchBarType, setLoading, indexOfFirstResult, indexOfLastResult) => {
+export const Request = (results, setResults, searchBarType, setLoading, indexOfFirstResult, indexOfLastResult) => {
   
   const searchBar = type => {
     const obj = {
@@ -56,18 +56,17 @@ export const Request = (setResults, searchBarType, setLoading, indexOfFirstResul
         return data;
       })
     )
-    .then((newresults) => setResults((results) => [...results, ...newresults]))
-      setLoading(false)
+    .then((newresults) => {
+      setResults([...results, ...newresults])
+      return
+    }) 
+    setLoading(false)
     // make conditional: check if searchBar type has changed, then clear array of results first
   }  
   
 
-  runAsyncFunctions()
+  // runAsyncFunctions()
 }
-  
-  // make first call, go through array, for each id, call for info, then return that/ save in new array and render it or paginate it
-  // Promise.all on the array (response of new storeis, certain block like ten per page), call other url within in to get data on those ten results
-  // Promise.all return each data, after you can chain with then that passes an array with all resolved data. This way you only need to call it once setResults:
-  // maybe cache data
+
 
 

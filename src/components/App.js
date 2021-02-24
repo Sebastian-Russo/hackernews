@@ -22,8 +22,8 @@ function App() {
   
   // API calls
   useEffect(() => {
-    Request(setResults, searchBarType, setLoading, indexOfFirstResult, indexOfLastResult)
-  }, [searchBarType, currentPage])
+    Request(results, setResults, searchBarType, setLoading, indexOfFirstResult, indexOfLastResult)
+  }, [searchBarType, results]) // ********* results dependency makes infinite loop
 
   // Get current results 
   const indexOfLastResult = currentPage * resultsPerPage;

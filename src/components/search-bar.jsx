@@ -10,10 +10,10 @@ export const SearchBar = ({handleClick}) => {
       <div id="news" onClick={(e) => handleClick(e)} className="logo-name">Hacker News</div>
       <div id="news" onClick={(e) => handleClick(e)} className="search-bar-btn">new</div>
       <div className="vl"></div>
-      <div id="past" onClick={(e) => handleClick(e)} className="search-bar-btn">past</div>
-      <div className="vl"></div>
-      <div id="comments" onClick={(e) => handleClick(e)} className="search-bar-btn">comments</div>
-      <div className="vl"></div>
+      {/* <div id="past" onClick={(e) => handleClick(e)} className="search-bar-btn">past</div> */}
+      {/* <div className="vl"></div> */}
+      {/* <div id="comments" onClick={(e) => handleClick(e)} className="search-bar-btn">comments</div> */}
+      {/* <div className="vl"></div> */}
       <div id="ask" onClick={(e) => handleClick(e)} className="search-bar-btn">ask</div>
       <div className="vl"></div>
       <div id="show" onClick={(e) => handleClick(e)} className="search-bar-btn">show</div>  
