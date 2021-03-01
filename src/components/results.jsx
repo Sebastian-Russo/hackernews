@@ -35,7 +35,6 @@ export const Results = ({results, loading}) => {
   return (
     <div className="results-wrapper">
       {result}
-      {/* <div className="more-btn" onClick={() => handleClick()} >More</div> */}
     </div>
   )
 }

@@ -2,6 +2,7 @@
   margin-left: 8%;
   margin-right: 8%;
   border-bottom: 2px solid orangered;
+  background-color: rgb(248, 248, 237);
 }
 
 @media only screen and (max-width: 1100px) {
@@ -9,4 +10,8 @@
     margin-left: 0;
     margin-right: 0;
   }
+}
+
+.more-btn:hover {
+  cursor: pointer;
 }

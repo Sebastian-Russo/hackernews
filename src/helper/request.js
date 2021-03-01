@@ -1,13 +1,8 @@
 import axios from 'axios';
-import BottleNeck from 'bottleneck'
-
-const limiter = new BottleNeck({
-  maxConcurrent: 1, 
-  minTime: 333
-})
 
 
 export const Request = (results, setResults, searchBarType, setLoading, indexOfFirstResult, indexOfLastResult) => {
+  
   
   const searchBar = type => {
     const obj = {
@@ -21,14 +16,13 @@ export const Request = (results, setResults, searchBarType, setLoading, indexOfF
       'best': 'beststories',
       'user': 'user'
     }
-  
+    
     return obj[type] ? obj[type] : obj['new'];
   }
-
-  let type = searchBar(searchBarType)
-
+  
+  
   const getData = () => {
-    const options = type
+    const options = searchBar(searchBarType)
     const API_URL = `https://hacker-news.firebaseio.com/v0/${options}.json?print=pretty`;
 
     return new Promise((resolve, reject) => {
@@ -47,11 +41,11 @@ export const Request = (results, setResults, searchBarType, setLoading, indexOfF
   const runAsyncFunctions = async () => {
     setLoading(true)
     const {data} = await getData()
-    let ids = data.slice(indexOfFirstResult, indexOfLastResult + 1)
+    let ids = data.slice(indexOfFirstResult, indexOfLastResult)
 
     Promise.all(
       ids.map(async (d) => {
-        const {data} = await limiter.schedule(() => getIdFromData(d))
+        const {data} = await getIdFromData(d)
         console.log(data)
         return data;
       })
@@ -65,7 +59,7 @@ export const Request = (results, setResults, searchBarType, setLoading, indexOfF
   }  
   
 
-  // runAsyncFunctions()
+  runAsyncFunctions()
 }
 
 

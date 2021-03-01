@@ -3,7 +3,6 @@ import './App.css';
 import { SearchBar } from './search-bar';
 import { Results } from './results';
 import { Request } from '../helper/request'
-import { Pagination } from './pagination';
 
 function App() {
   const [results, setResults] = useState([]);
@@ -17,30 +16,31 @@ function App() {
   const handleClick = (e) => {
     const serachBarButtonId = e.target.id;
     console.log(serachBarButtonId)
+    setResults([])
     setsearchBarType(serachBarButtonId)
+  }
+
+  const handleMore = () => {
+    setCurrentPage(currentPage => currentPage +1) // increment state with hooks 
   }
   
   // API calls
   useEffect(() => {
     Request(results, setResults, searchBarType, setLoading, indexOfFirstResult, indexOfLastResult)
-  }, [searchBarType, results]) // ********* results dependency makes infinite loop
+  }, [searchBarType, currentPage]) 
 
   // Get current results 
   const indexOfLastResult = currentPage * resultsPerPage;
   const indexOfFirstResult = indexOfLastResult - resultsPerPage;
-  const currentResults = results.slice(indexOfFirstResult, indexOfLastResult);
+  // const currentResults = results.slice(indexOfFirstResult, indexOfLastResult);
 
-  console.log(indexOfFirstResult, indexOfLastResult)
-
-  // Change page
-  const paginate = (pageNumber) => setCurrentPage(pageNumber); 
 
 
   return (
     <div className="App">
       <SearchBar handleClick={handleClick} />
-      <Results results={currentResults} loading={loading} />
-      <Pagination resultsPerPage={resultsPerPage} totalResults={results.length} paginate={paginate} />
+      <Results results={results} loading={loading} />
+      <div className="more-btn" onClick={() => handleMore()} >More</div>
     </div>
   );
 }
