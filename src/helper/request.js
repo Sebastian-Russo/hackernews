@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export const Request = (results, setResults, searchBarType, setLoading, indexOfFirstResult, indexOfLastResult) => {
   
-  
+  // If user selects a link on search bar, then change query
   const searchBar = type => {
     const obj = {
       'new': 'newstories',
@@ -20,7 +20,7 @@ export const Request = (results, setResults, searchBarType, setLoading, indexOfF
     return obj[type] ? obj[type] : obj['new'];
   }
   
-  
+  // First API Call, grabs latest 500 ids 
   const getData = () => {
     const options = searchBar(searchBarType)
     const API_URL = `https://hacker-news.firebaseio.com/v0/${options}.json?print=pretty`;
@@ -30,6 +30,7 @@ export const Request = (results, setResults, searchBarType, setLoading, indexOfF
     })
   }
 
+  // Second API Call, grabs data about individual id
   const getIdFromData = (dataId) => {
     const API_URL = `https://hacker-news.firebaseio.com/v0/item/${dataId}.json?print=pretty`;
     return new Promise((resolve, reject) => {
